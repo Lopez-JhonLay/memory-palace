@@ -14,6 +14,11 @@ const router = createRouter({
       name: "palace-manager",
       component: () => import("../views/PalaceManager.vue"),
     },
+    {
+      path: "/palace/:id",
+      name: "RoomView",
+      component: () => import("../views/RoomView.vue"),
+    },
   ],
 });
 

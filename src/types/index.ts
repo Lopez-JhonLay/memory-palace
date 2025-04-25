@@ -14,6 +14,9 @@ export type MemoryObject = {
 export type Room = {
   id: string;
   name: string;
-  gridSize: number;
+  gridSize: {
+    rows: number;
+    cols: number;
+  };
   objects: MemoryObject[];
 };
