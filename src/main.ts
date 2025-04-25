@@ -1,5 +1,6 @@
 import "./assets/main.css";
 import "bootswatch/dist/sketchy/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
