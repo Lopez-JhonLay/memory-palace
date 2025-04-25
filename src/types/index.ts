@@ -6,9 +6,11 @@ export type Palace = {
 
 export type MemoryObject = {
   id: string;
-  position: number;
+  name: string;
   type: "text" | "image";
   content: string;
+  x: number;
+  y: number;
 };
 
 export type Room = {
