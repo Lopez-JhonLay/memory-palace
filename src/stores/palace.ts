@@ -8,9 +8,7 @@ export const usePalaceStore = defineStore("palace", () => {
 
   //actions ========== PALACE ==========
   const addPalace = (palace: Palace) => {
-    console.log("Receive Palace:", palace);
     palaces.value.push(palace);
-    console.log("From Palace Store:", palaces);
   };
 
   const updatePalace = (updatedPalace: Palace) => {

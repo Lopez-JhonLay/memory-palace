@@ -2,40 +2,26 @@
   <div class="container py-5">
     <h1 class="mb-4">🧠 Your Memory Palaces</h1>
 
-    <!-- Palace Cards -->
-    <!-- <div v-if="palaces.length">
-      <div v-for="palace in palaces" :key="palace.id" class="card mb-3">
-        <div
-          class="card-body d-flex justify-content-between align-items-center"
-        >
-          <h5 class="mb-0">{{ palace.name }}</h5>
-          <div>
-            <button
-              class="btn btn-primary btn-sm me-2"
-              @click="goToPalace(palace.id)"
-            >
-              Enter
-            </button>
-            <button
-              class="btn btn-danger btn-sm"
-              @click="deletePalace(palace.id)"
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-else class="text-muted mb-4">No palaces yet. Create one!</div> -->
-
     <!-- Add Palace Button -->
     <button
-      class="btn btn-success mt-3"
+      class="btn btn-success mb-3"
       data-bs-toggle="modal"
       data-bs-target="#newPalaceModal"
     >
       + Add Palace
     </button>
+
+    <!-- Palace Cards -->
+    <div v-if="palaces.length">
+      <PalaceCard
+        v-for="palace in palaces"
+        :key="palace.id"
+        :palace="palace"
+        @enter="goToPalace"
+        @delete="deletePalace"
+      />
+    </div>
+    <div v-else class="text-muted mb-4">No palaces yet. Create one!</div>
 
     <!-- Modal -->
     <div
@@ -90,18 +76,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
 import { nanoid } from "nanoid";
 
 import { usePalaceStore } from "@/stores/palace";
 
+import PalaceCard from "@/components/palace/PalaceCard.vue";
+
 const router = useRouter();
 
-const palaceStore = usePalaceStore();
-
-const palaces = palaceStore.palaces;
+const palaces = computed(() => usePalaceStore().palaces);
 
 const newPalaceName = ref("");
 
@@ -110,13 +96,23 @@ const addNewPalace = () => {
 
   if (!name) return;
 
-  palaceStore.addPalace({
+  usePalaceStore().addPalace({
     id: nanoid(),
     name,
     rooms: [],
   });
 
   newPalaceName.value = "";
+};
+
+const deletePalace = (id: string) => {
+  if (confirm("Delete this palace?")) {
+    usePalaceStore().deletePalace(id);
+  }
+};
+
+const goToPalace = (id: string) => {
+  router.push(`/palace/${id}`);
 };
 </script>
 
